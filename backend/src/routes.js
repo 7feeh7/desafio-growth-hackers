@@ -6,51 +6,13 @@ const { v4: uuidv4 } = require('uuid')
 
 const TagController = require('./controllers/TagController')
 
-const tags = []
 const products = []
 
-
 // route from tags
-routes.post('/tags', (req, res) => {
-    const { name } = req.body
-
-    const tag = { name, id: uuidv4() }
-
-    tags.push(tag)
-
-    return res.json(tag)
-})
-
 routes.get('/tags', TagController.index)
-
-routes.get('/tags/:id', (req, res) => {
-    const { id } = req.params
-    const tag = tags.find((tag) => tag.id === id)
-    return res.json(tag)
-})
-
-routes.put('/tags/:id', (req, res) => {
-    const { id } = req.params
-    
-    const { name } = req.body
-    
-    const tagIndex = tags.findIndex((tag) => tag.id === id)
-    tags[tagIndex] = {
-        ...tags[tagIndex],
-        name
-    }
-    return res.json({ message: "Categoria alterado com sucesso!" })
-})
-
-routes.delete('/tags/:id', (req, res) => {
-    const { id } = req.params
-
-    const tagIndex = products.findIndex((tag) => tag.id === id)
-
-    tags.splice(tagIndex, 1)
-
-    return res.json({ message: "Categoria removido com sucesso!" })
-})
+routes.post('/tags', TagController.create)
+routes.put('/tags/:id', TagController.update)
+routes.delete('/tags/:id', TagController.delete)
 
 // route from products
 routes.post('/products', (req, res) => {
