@@ -4,6 +4,8 @@ const routes = express.Router()
 
 const { v4: uuidv4 } = require('uuid')
 
+const TagController = require('./controllers/TagController')
+
 const tags = []
 const products = []
 
@@ -19,9 +21,7 @@ routes.post('/tags', (req, res) => {
     return res.json(tag)
 })
 
-routes.get('/tags', (req, res) => {
-    return res.json(tags)
-})
+routes.get('/tags', TagController.index)
 
 routes.get('/tags/:id', (req, res) => {
     const { id } = req.params
